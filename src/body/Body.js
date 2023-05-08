@@ -1,5 +1,5 @@
 import './Body.css';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Emoji from './emoji/Emoji';
 
 export function Body() {
@@ -15,22 +15,27 @@ export function Body() {
             setDisabled(true);
         }
         else if (disabled) setDisabled(false);
-        setReview();
+        setReview(newReview);
     };
 
     const handleResponse = res => {
-        console.log(res);
-        if (res.sentiment === "happy") {
+        if (res.sentiment === "Positive") {
             setSentiment(String.fromCodePoint(128522));
         }
-        else if (res.sentiment === "sad") {
+        else if (res.sentiment === "Negative") {
             setSentiment(String.fromCodePoint(128577));
         }
     } 
 
-    const analyzeReview = () => {
-        console.log(process.env.REACT_APP_API_URL)
-        fetch(process.env.REACT_APP_API_URL)
+    const analyzeReview = useCallback(() => {
+        fetch(process.env.REACT_APP_API_URL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data: review})
+          })
          .then((response) => {
             console.log(response)
             response.json()
@@ -41,19 +46,19 @@ export function Body() {
          .catch((err) => {
             console.log(err.message);
          });
-    };
+    }, [review]);
 
-    const analyzeReviewTest = () => {
+    /*const analyzeReview = () => {
         handleResponse({
             sentiment: "happy"
         });
-    }
+    }*/
     
     return (
         <div className="Body">
             <textarea className='ReviewTextArea' value={review} onChange={handleReviewChange}></textarea>
             <div className='Analysis'>
-                <button className='AnalyseReviewButton' onClick={analyzeReviewTest} disabled={disabled}>Check Sentiment</button>
+                <button className='AnalyseReviewButton' onClick={analyzeReview} disabled={disabled}>Check Sentiment</button>
                 <Emoji className='SentimentEmoji' symbol={sentiment} />
             </div>
         </div>
