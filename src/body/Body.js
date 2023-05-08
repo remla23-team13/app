@@ -19,10 +19,10 @@ export function Body() {
     };
 
     const handleResponse = res => {
-        if (res.sentiment === "Positive") {
+        if (res.prediction === "Positive") {
             setSentiment(String.fromCodePoint(128522));
         }
-        else if (res.sentiment === "Negative") {
+        else if (res.prediction === "Negative") {
             setSentiment(String.fromCodePoint(128577));
         }
     } 
@@ -37,8 +37,7 @@ export function Body() {
             body: JSON.stringify({data: review})
           })
          .then((response) => {
-            console.log(response)
-            response.json()
+            return response.json();
          })
          .then((data) => {
             handleResponse(data)
