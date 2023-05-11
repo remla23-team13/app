@@ -21,8 +21,6 @@ jobs:
           echo "version_patch=$PATCH" >> $GITHUB_ENV
       - name: Registry Login (ghcr.io)
         run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-      - name: npm login
-        run: echo //npm.pkg.github.com/:_authToken="${{ secrets.GH_TOKEN }}" >> ~/.npmrc
       - name: Build and Push Docker Image
         run: |
           IMG=ghcr.io/${{ github.repository }}
@@ -34,4 +32,6 @@ jobs:
             --tag $IMG:latest \
             .
           docker push --all-tags $IMG
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
