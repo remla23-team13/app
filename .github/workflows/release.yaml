@@ -27,6 +27,10 @@ jobs:
           node-version: '16.x'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
 
       - name: Build and Push Docker Image
         run: |
