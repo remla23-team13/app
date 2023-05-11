@@ -21,22 +21,12 @@ jobs:
           echo "version_patch=$PATCH" >> $GITHUB_ENV
       - name: Registry Login (ghcr.io)
         run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-      - name: Set up Node.js
-        uses: actions/setup-node@v2.4.1
-        with:
-          node-version: '16.x'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install dependencies and build
-        run: |
-          npm ci
-          npm run build
 
       - name: Build and Push Docker Image
         run: |
           IMG=ghcr.io/${{ github.repository }}
           IMG=${IMG,,}
-          docker build \
+          docker build --build-arg token=${{ secrets.GH_TOKEN }}\
             --tag $IMG:${{ env.version }} \
             --tag $IMG:${{ env.version_major }}.${{ env.version_minor }}.latest \
             --tag $IMG:${{ env.version_major }}.latest \

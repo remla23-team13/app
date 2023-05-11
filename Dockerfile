@@ -6,6 +6,10 @@ WORKDIR /app
 
 COPY . .
 
+ARG token
+
+ENV NODE_AUTH_TOKEN=${token}
+
 RUN npm ci
 
 RUN npm run build
