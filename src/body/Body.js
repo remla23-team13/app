@@ -36,7 +36,7 @@ export function Body() {
     } 
 
     const analyzeReview = useCallback(() => {
-        fetch(process.env.MODEL_S_SERVICE_PATH + "predict", {
+        fetch(process.env.MODEL_S_SERVICE_PATH + "/predict", {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -62,7 +62,7 @@ export function Body() {
     // }
 
     const incrementNWrongSentiments = () => {
-        fetch(process.env.MODEL_S_SERVICE_PATH + "wrong", {
+        fetch(process.env.MODEL_S_SERVICE_PATH + "/wrong", {
             method: 'POST'
             })
         setWrongSentimentDisabled(true);
