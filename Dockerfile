@@ -1,19 +1,13 @@
-# Dockerfile
-
-FROM node:alpine 
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 
 WORKDIR /app
 
-COPY . .
+COPY . /app
 
-ARG token
-
-ENV NODE_AUTH_TOKEN=${token}
-
-RUN npm install
-
-RUN npm run build
+RUN pip install -r requirements.txt
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+ENV MODEL_SERVICE="http://model-service"
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3000"]

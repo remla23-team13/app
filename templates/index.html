@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app">
+        <div class="wrapper">
+            <div class="header">
+                <div class="title">
+                    Restaurant Review Sentiment Analysis
+                </div>
+                <div class="course">
+                    Release Engineering for Machine Learning Applications
+                </div>
+                <div class="members">
+                    <div class='member'>Gaspar Rocha</div>
+                    <div class='member'>Giulio Piva</div>
+                    <div class='member'>Isa Rethans</div>
+                    <div class='member'>Sara Op den Orth</div>
+                </div>
+                <div class="body">
+                    <form action="/submit" method="POST">
+                        <textarea name="data" class="reviewTextArea"></textarea>
+                        <div class='Analysis'>
+                            <button class='analyseReviewButton' type="submit">Check Sentiment</button>
+                        </div>
+                        {% if prediction is defined %}
+                        <span class="emoji" role="img" aria-label="{{ prediction }}">
+                            {{ prediction }}
+                        </span>
+                        {% endif %}
+                           
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
