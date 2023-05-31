@@ -30,20 +30,21 @@ async def predict(request: Request, data: str = Form(...)):
     """
     Predicts the sentiment of a given text
     """
-    print("hello")
-    print(data)
     payload = dict(data=data)
     response = requests.post(server_url + "/predict",json=payload)
-    print(response.json())
     prediction = response.json().get("prediction")
-    return templates.TemplateResponse("index.html",{"request": request,"prediction": prediction})
+    response = requests.get(server_url + "/version")
+    version = response.json().get("version")
+    return templates.TemplateResponse("index.html",{"request": request,"prediction": prediction, "version": version})
 
 @app.get('/')
 async def index(request: Request):
     """
     Predicts the sentiment of a given text
     """
-    return templates.TemplateResponse("index.html",{"request": request})
+    response = requests.get(server_url + "/version")
+    version = response.json().get("version")
+    return templates.TemplateResponse("index.html",{"request": request, "version": version})
 
 if __name__ == '__main__':
     import uvicorn
