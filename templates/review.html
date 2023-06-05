@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">Home</a>
+    </nav>
+    <div class="app">
+        <div class="wrapper">
+            <div class="header">
+                <div class="title">
+                Leave a review for {{ restaurant_name }}!
+                </div>
+                <div class="body">
+                    <form action="/submit/{{restaurant_id}}" method="POST">
+                        <textarea name="data" class="reviewTextArea"></textarea>
+                        <div class='Analysis'>
+                            <button class='analyseReviewButton' type="submit">Check Sentiment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    var wrongButton = document.getElementById("wrongbutton");
+    wrongButton.addEventListener("click", function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/wrong", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+        }));
+        wrongButton.style.display = "none";
+    });
+    // hide the wrong button
+</script>
+
+</html>

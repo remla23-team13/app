@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">Home</a>
+    </nav>
+
+    <div class="app">
+      <div class="wrapper">
+        <div class="header">
+          <div class="title">Thank you!</div>
+          <div id="reviewbox" class="body">
+            {% if prediction is defined %}
+            Your review has been evaluated as {{prediction}}.
+            Is it correct?
+            <button id="wrongbutton" class="wrongSentimentButton">Wrong</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    var wrongButton = document.getElementById("wrongbutton");
+    wrongButton.addEventListener("click", function () {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/wrong", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify({}));
+      wrongButton.style.display = "none";
+      reviewbox.innerHTML = "Thank you for your feedback!";
+    });
+    // hide the wrong button
+  </script>
+</html>

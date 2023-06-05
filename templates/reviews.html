@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">Home</a>
+    </nav>
+  <div class="container">
+    <h1>{{ restaurant_name }}</h1>
+    <ul class="list-group">
+      {% for review in reviews %}
+        <li class="list-group-item">{{ review.description }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
