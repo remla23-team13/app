@@ -35,7 +35,8 @@ async def predict(request: Request, restaurant_id: int, data: str = Form(...)):
 
     payload = dict(data=data)
     response = requests.post(server_url + "/predict/" +
-                             str(restaurant_id), json=payload)
+                             str(restaurant_id), json=payload,
+                             cookies=request.cookies)
     prediction = response.json().get("prediction")
     # redirect to the review page
     return templates.TemplateResponse("review_ok.html", {"prediction": prediction, "request": request})
@@ -74,7 +75,7 @@ async def reviews(request: Request, restaurant_id: int):
 
 @app.post('/wrong')
 async def wrong(request: Request):
-    requests.post(server_url + "/wrong")
+    requests.post(server_url + "/wrong", cookies=request.cookies)
 
 
 @app.get('/')
